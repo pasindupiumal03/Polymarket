@@ -51,7 +51,7 @@ export default function Home() {
             </h1>
             
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed px-4">
-              The world&apos;s first decentralized prediction market platform powered by BNB Chain. Create markets, place bets, and earn from your insights.
+              The world&apos;s first decentralized prediction market platform powered by SOL Chain. Create markets, place bets, and earn from your insights.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 px-4">
@@ -84,7 +84,7 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="text-3xl font-bold mb-1 group-hover:text-primary transition-colors text-card-foreground">1.70 BNB</div>
+                  <div className="text-3xl font-bold mb-1 group-hover:text-primary transition-colors text-card-foreground">1.70 SOL</div>
                   <div className="text-sm text-muted-foreground uppercase tracking-wide">Total Volume</div>
                 </div>
                 
@@ -143,9 +143,9 @@ export default function Home() {
                 
                 <div className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-secondary border border-border rounded-lg hover:border-primary/30 transition-all duration-300 group">
                   <span className="group-hover:scale-110 transition-transform">
-                    <Image src="/BNB_logo-t74kHAI.svg" alt="BNB Chain" width={20} height={20} className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Image src="/BNB_logo-t74kHAI.svg" alt="SOL Chain" width={20} height={20} className="w-4 h-4 sm:w-5 sm:h-5" />
                   </span>
-                  <span className="text-xs sm:text-sm font-semibold text-secondary-foreground">BNB Chain Powered</span>
+                  <span className="text-xs sm:text-sm font-semibold text-secondary-foreground">SOL Chain Powered</span>
                 </div>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function Home() {
                     <path d="m16.71 13.88.7.71-2.82 2.82" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors text-card-foreground">BNB Chain Powered</h3>
+                <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors text-card-foreground">SOL Chain Powered</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Fast transactions, minimal fees</p>
               </div>
             </div>

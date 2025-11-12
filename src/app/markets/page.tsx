@@ -26,9 +26,9 @@ interface Market {
 const curatedMarkets: Market[] = [
   {
     id: "1",
-    title: "Will BNB's spot price be above $1000 at 23:59:59 UTC on Thursday Oct 16?",
-    description: "Will BNB's spot price be above $1700 at 23:59:59 UTC on Thursday Oct 16?",
-    volume: "1,250 BNB",
+    title: "Will SOL's spot price be above $1000 at 23:59:59 UTC on Thursday Oct 16?",
+    description: "Will SOL's spot price be above $1700 at 23:59:59 UTC on Thursday Oct 16?",
+    volume: "1,250 SOL",
     endDate: "Oct 16",
     options: [
       { name: "Yes", odds: "0.01", percentage: 0, color: 'green' },
@@ -40,9 +40,9 @@ const curatedMarkets: Market[] = [
   },
   {
     id: "2",
-    title: "Will BNB's spot price be above $1700 at 16:30 UTC on Wednesday Oct 15?",
-    description: "Will BNB's spot price be above $1700 at 16:30 UTC on Wednesday Oct 15?",
-    volume: "3,890 BNB",
+    title: "Will SOL's spot price be above $1700 at 16:30 UTC on Wednesday Oct 15?",
+    description: "Will SOL's spot price be above $1700 at 16:30 UTC on Wednesday Oct 15?",
+    volume: "3,890 SOL",
     endDate: "Oct 15",
     options: [
       { name: "Yes", odds: "0.09", percentage: 9, color: 'green' },
@@ -54,9 +54,9 @@ const curatedMarkets: Market[] = [
   },
   {
     id: "3",
-    title: "Will BNB's spot price be above $1200 at 16:30 UTC on Wednesday Oct 15?",
-    description: "Will BNB's spot price be above $1200 at 16:30 UTC on Wednesday Oct 15?",
-    volume: "567 BNB",
+    title: "Will SOL's spot price be above $1200 at 16:30 UTC on Wednesday Oct 15?",
+    description: "Will SOL's spot price be above $1200 at 16:30 UTC on Wednesday Oct 15?",
+    volume: "567 SOL",
     endDate: "Oct 15",
     options: [
       { name: "Yes", odds: "0.34", percentage: 34, color: 'green' },
@@ -68,9 +68,9 @@ const curatedMarkets: Market[] = [
   },
   {
     id: "4",
-    title: "Will BNB's spot price be above $1250 at 09:00 UTC on Wednesday Oct 15?",
-    description: "Will BNB's spot price be above $1250 at 09:00 UTC on Wednesday Oct 15?",
-    volume: "423 BNB",
+    title: "Will SOL's spot price be above $1250 at 09:00 UTC on Wednesday Oct 15?",
+    description: "Will SOL's spot price be above $1250 at 09:00 UTC on Wednesday Oct 15?",
+    volume: "423 SOL",
     endDate: "Oct 15",
     options: [
       { name: "Yes", odds: "0.35", percentage: 35, color: 'green' },

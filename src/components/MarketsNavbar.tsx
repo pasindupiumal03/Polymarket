@@ -48,12 +48,16 @@ declare global {
 export default function MarketsNavbar() {
   const [isConnected, setIsConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
+  const [fullWalletAddress, setFullWalletAddress] = useState('');
   const [balance, setBalance] = useState('0.0000');
   const [points] = useState(0);
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showNetworkModal, setShowNetworkModal] = useState(false);
   const [currentChainId, setCurrentChainId] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showWalletDropdown, setShowWalletDropdown] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [connectedWalletType, setConnectedWalletType] = useState<string | null>(null);
   
   const pathname = usePathname();
   const [walletProviders, setWalletProviders] = useState<WalletProvider[]>([]);
@@ -148,6 +152,50 @@ export default function MarketsNavbar() {
       mounted = false;
     };
   }, []);
+
+  // Restore wallet connection from localStorage on mount
+  useEffect(() => {
+    const storedWalletData = localStorage.getItem('wallet_connection');
+    if (storedWalletData) {
+      try {
+        const { address, fullAddress, balance, walletType, chainId } = JSON.parse(storedWalletData);
+        setWalletAddress(address);
+        setFullWalletAddress(fullAddress);
+        setBalance(balance);
+        setConnectedWalletType(walletType);
+        setCurrentChainId(chainId);
+        setIsConnected(true);
+        
+        // Try to reconnect to the same wallet
+        setTimeout(() => {
+          const wallets = getWalletProviders();
+          const savedWallet = wallets.find(w => w.name === walletType);
+          if (savedWallet) {
+            // Update balance
+            getBalance(savedWallet.connector, fullAddress).then(setBalance);
+          }
+        }, 1000);
+      } catch (error) {
+        console.error('Error restoring wallet connection:', error);
+        localStorage.removeItem('wallet_connection');
+      }
+    }
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (showWalletDropdown && !target.closest('.wallet-dropdown-container')) {
+        setShowWalletDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showWalletDropdown]);
 
   const detectWallets = () => setWalletProviders(getWalletProviders());
 
@@ -258,9 +306,21 @@ export default function MarketsNavbar() {
       const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
       
       setWalletAddress(shortAddress);
+      setFullWalletAddress(address);
       setBalance(userBalance);
+      setConnectedWalletType(walletProvider.name);
       setIsConnected(true);
       setShowWalletModal(false);
+      
+      // Store wallet connection in localStorage
+      const walletData = {
+        address: shortAddress,
+        fullAddress: address,
+        balance: userBalance,
+        walletType: walletProvider.name,
+        chainId: BNB_CHAIN_CONFIG.chainId
+      };
+      localStorage.setItem('wallet_connection', JSON.stringify(walletData));
       
       // Listen for account changes
       if (provider.on) {
@@ -268,8 +328,21 @@ export default function MarketsNavbar() {
           if (accounts.length === 0) {
             disconnectWallet();
           } else {
-            setWalletAddress(`${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`);
-            getBalance(provider, accounts[0]).then(setBalance);
+            const newShortAddress = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+            setWalletAddress(newShortAddress);
+            setFullWalletAddress(accounts[0]);
+            getBalance(provider, accounts[0]).then((newBalance) => {
+              setBalance(newBalance);
+              // Update localStorage
+              const walletData = {
+                address: newShortAddress,
+                fullAddress: accounts[0],
+                balance: newBalance,
+                walletType: walletProvider.name,
+                chainId: currentChainId
+              };
+              localStorage.setItem('wallet_connection', JSON.stringify(walletData));
+            });
           }
         });
 
@@ -304,8 +377,30 @@ export default function MarketsNavbar() {
   const disconnectWallet = () => {
     setIsConnected(false);
     setWalletAddress('');
+    setFullWalletAddress('');
     setBalance('0.0000');
     setCurrentChainId(null);
+    setConnectedWalletType(null);
+    setShowWalletDropdown(false);
+    localStorage.removeItem('wallet_connection');
+  };
+
+  // Copy wallet address
+  const copyWalletAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(fullWalletAddress);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 3000);
+      setShowWalletDropdown(false);
+    } catch (error) {
+      console.error('Failed to copy address:', error);
+    }
+  };
+
+  // Change wallet
+  const changeWallet = () => {
+    setShowWalletDropdown(false);
+    setShowWalletModal(true);
   };
 
   // Handle connect wallet button click
@@ -368,12 +463,55 @@ export default function MarketsNavbar() {
                     </div>
                   </div>
                   
-                  {/* Wallet Address */}
-                  <div className="flex items-center gap-2 px-3 py-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <div className="flex flex-col">
-                      <span className="text-white text-sm font-mono">{walletAddress}</span>
-                    </div>
+                  
+                  {/* Wallet Address with Dropdown */}
+                  <div className="relative wallet-dropdown-container">
+                    <button
+                      onClick={() => setShowWalletDropdown(!showWalletDropdown)}
+                      className="flex items-center gap-2 px-3 py-2 bg-blue-900/20 border border-blue-700/30 rounded-md hover:bg-blue-900/30 transition-colors cursor-pointer"
+                    >
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="flex flex-col">
+                        <span className="text-white text-sm font-mono">
+                          {copySuccess ? 'Copied!' : walletAddress}
+                        </span>
+                      </div>
+                      <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {showWalletDropdown && (
+                      <div className="absolute top-full mt-2 right-0 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-xl z-50 min-w-[200px]">
+                        <div className="py-2">
+                          <button
+                            onClick={copyWalletAddress}
+                            className="w-full px-4 py-2 text-left text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-2"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            Copy Address
+                          </button>
+                          <button
+                            onClick={changeWallet}
+                            className="w-full px-4 py-2 text-left text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-2"
+                          >
+                            <LuWallet className="w-4 h-4" />
+                            Change Wallet
+                          </button>
+                          <hr className="border-gray-700 my-2" />
+                          <button
+                            onClick={disconnectWallet}
+                            className="w-full px-4 py-2 text-left text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors flex items-center gap-2"
+                          >
+                            <IoExitOutline className="w-4 h-4" />
+                            Disconnect
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   {/* Disconnect Button */}

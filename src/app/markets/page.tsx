@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { IoMdTrendingUp } from "react-icons/io";
 import MarketsNavbar from "../../components/MarketsNavbar";
+import { getUserVotes, saveUserVote, hasUserVoted, UserVote } from "../../utils/userVotes";
 
 interface Market {
   id: string;
@@ -149,18 +150,67 @@ export default function CuratedMarketsPage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const [markets, setMarkets] = useState<Market[]>([]);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const marketsPerPage = 4;
 
   // Combine all markets and sort: open markets first, then by date
   const allMarkets = [...curatedMarkets, ...activeMarkets];
   
-  // Initialize markets with user votes
+  // Initialize markets with user votes from localStorage
   useEffect(() => {
-    const marketsWithVotes = allMarkets.map(market => ({
-      ...market,
-      userVote: null as 'YES' | 'NO' | null
-    }));
-    setMarkets(marketsWithVotes);
+    const checkWalletAndLoadVotes = () => {
+      const storedWalletData = localStorage.getItem('wallet_connection');
+      if (storedWalletData) {
+        try {
+          const { fullAddress } = JSON.parse(storedWalletData);
+          setWalletAddress(fullAddress);
+          
+          // Load user votes from localStorage
+          const userVotes = getUserVotes(fullAddress);
+          const votesMap: Record<string, 'YES' | 'NO'> = {};
+          userVotes.forEach(vote => {
+            votesMap[vote.marketId] = vote.choice;
+          });
+          
+          // Update markets with user votes
+          const marketsWithVotes = allMarkets.map(market => ({
+            ...market,
+            userVote: votesMap[market.id] || null
+          }));
+          setMarkets(marketsWithVotes);
+        } catch (error) {
+          console.error('Error loading wallet data:', error);
+          setWalletAddress(null);
+          const marketsWithoutVotes = allMarkets.map(market => ({
+            ...market,
+            userVote: null as 'YES' | 'NO' | null
+          }));
+          setMarkets(marketsWithoutVotes);
+        }
+      } else {
+        setWalletAddress(null);
+        const marketsWithoutVotes = allMarkets.map(market => ({
+          ...market,
+          userVote: null as 'YES' | 'NO' | null
+        }));
+        setMarkets(marketsWithoutVotes);
+      }
+    };
+
+    checkWalletAndLoadVotes();
+
+    // Listen for wallet connection changes
+    const handleStorageChange = () => {
+      checkWalletAndLoadVotes();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    const interval = setInterval(checkWalletAndLoadVotes, 1000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
   }, []);
 
   // Filter markets based on search query
@@ -189,30 +239,40 @@ export default function CuratedMarketsPage() {
   const startIndex = (currentPage - 1) * marketsPerPage;
   const currentMarkets = sortedMarkets.slice(startIndex, startIndex + marketsPerPage);
 
-  // Handle voting
+  // Handle voting with localStorage persistence and prevention of vote changes
   const handleVote = (marketId: string, vote: 'YES' | 'NO') => {
+    // Check if wallet is connected
+    if (!walletAddress) {
+      alert('Please connect your wallet to vote');
+      return;
+    }
+
+    // Check if user has already voted on this market
+    if (hasUserVoted(marketId, walletAddress)) {
+      alert('You have already voted on this market and cannot change your vote');
+      return;
+    }
+
+    // Save vote to localStorage
+    const success = saveUserVote(marketId, vote, walletAddress);
+    if (!success) {
+      alert('Failed to save your vote. Please try again.');
+      return;
+    }
+
+    // Update local state to reflect the vote
     setMarkets(prevMarkets => 
       prevMarkets.map(market => {
         if (market.id === marketId) {
           const updatedMarket = { ...market };
           
-          // Remove previous vote if any
-          if (market.userVote) {
-            const prevVoteIndex = market.options.findIndex(opt => opt.name === market.userVote);
-            if (prevVoteIndex !== -1) {
-              updatedMarket.options[prevVoteIndex].percentage = Math.max(0, 
-                updatedMarket.options[prevVoteIndex].percentage - 1
-              );
-            }
-          }
-          
-          // Add new vote
+          // Add new vote to the chosen option
           const voteIndex = market.options.findIndex(opt => opt.name === vote);
           if (voteIndex !== -1) {
             updatedMarket.options[voteIndex].percentage += 1;
           }
           
-          // Update odds based on new percentages
+          // Recalculate percentages and odds
           const yesPercentage = updatedMarket.options[0].percentage;
           const noPercentage = updatedMarket.options[1].percentage;
           const total = yesPercentage + noPercentage;
@@ -225,13 +285,18 @@ export default function CuratedMarketsPage() {
           }
           
           updatedMarket.userVote = vote;
-          updatedMarket.participants += market.userVote ? 0 : 1; // Only increment if first vote
+          updatedMarket.participants += 1; // Increment participant count
           
           return updatedMarket;
         }
         return market;
       })
     );
+
+    // Show success message
+    setTimeout(() => {
+      alert(`Vote "${vote}" recorded successfully! You can view your position in Live Positions.`);
+    }, 100);
   };
 
   // Update time every second
@@ -353,26 +418,30 @@ export default function CuratedMarketsPage() {
             </button>
           ) : market.status === 'Waiting' ? (
             <div className="flex items-center gap-1">
-              <button 
-                onClick={() => handleVote(market.id, 'YES')}
-                className={`px-3 py-1 border rounded text-xs font-medium transition-all duration-200 ${
-                  market.userVote === 'YES' 
-                    ? 'bg-green-600 border-green-500 text-white shadow-lg' 
-                    : 'bg-green-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30'
-                }`}
-              >
-                YES
-              </button>
-              <button 
-                onClick={() => handleVote(market.id, 'NO')}
-                className={`px-3 py-1 border rounded text-xs font-medium transition-all duration-200 ${
-                  market.userVote === 'NO' 
-                    ? 'bg-red-600 border-red-500 text-white shadow-lg' 
-                    : 'bg-red-600/20 border-red-500/30 text-red-400 hover:bg-red-600/30'
-                }`}
-              >
-                NO
-              </button>
+              {!walletAddress ? (
+                <span className="px-3 py-1 bg-gray-600/50 text-gray-400 rounded text-xs font-medium">
+                  Connect Wallet to Vote
+                </span>
+              ) : market.userVote ? (
+                <span className="px-3 py-1 bg-blue-600/20 border border-blue-500/30 text-blue-400 rounded text-xs font-medium">
+                  Voted: {market.userVote}
+                </span>
+              ) : (
+                <>
+                  <button 
+                    onClick={() => handleVote(market.id, 'YES')}
+                    className="px-3 py-1 border rounded text-xs font-medium transition-all duration-200 bg-green-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30"
+                  >
+                    YES
+                  </button>
+                  <button 
+                    onClick={() => handleVote(market.id, 'NO')}
+                    className="px-3 py-1 border rounded text-xs font-medium transition-all duration-200 bg-red-600/20 border-red-500/30 text-red-400 hover:bg-red-600/30"
+                  >
+                    NO
+                  </button>
+                </>
+              )}
             </div>
           ) : (
             <span className="px-4 py-1 bg-blue-500 text-white rounded text-xs font-medium">

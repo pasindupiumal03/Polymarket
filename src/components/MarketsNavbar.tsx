@@ -180,6 +180,17 @@ export default function MarketsNavbar() {
         localStorage.removeItem('wallet_connection');
       }
     }
+
+    // Listen for openWalletModal events from other components
+    const handleOpenWalletModal = () => {
+      setShowWalletModal(true);
+    };
+
+    window.addEventListener('openWalletModal', handleOpenWalletModal);
+
+    return () => {
+      window.removeEventListener('openWalletModal', handleOpenWalletModal);
+    };
   }, []);
 
   // Close dropdown when clicking outside
@@ -526,6 +537,7 @@ export default function MarketsNavbar() {
               ) : (
                 <button 
                   onClick={handleConnectWallet}
+                  data-connect-wallet
                   className="px-6 py-2 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-400 transition-colors"
                 >
                   Connect Wallet

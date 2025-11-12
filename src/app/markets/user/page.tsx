@@ -1,5 +1,7 @@
 'use client';
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from 'react';
 import { IoMdTrendingUp } from "react-icons/io";
 import MarketsNavbar from '../../../components/MarketsNavbar';
@@ -105,33 +107,31 @@ export default function UserMarketsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-yellow-500 rounded flex items-center justify-center">
-                <span className="text-black font-bold text-sm">B</span>
-              </div>
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket" width={24} height={24} className="w-6 h-6" />
               <div>
-                <h3 className="text-white font-medium">BNBets</h3>
-                <p className="text-xs text-gray-400 uppercase tracking-wider">PREDICTION MARKETS</p>
+                <h3 className="text-white font-medium">PolyMarket</h3>
+                <p className="text-xs text-gray-400">PREDICTION MARKETS</p>
               </div>
             </div>
             
             <div className="flex items-center gap-6">
-              <a href="/docs" className="text-gray-400 hover:text-white text-sm transition-colors">
+              <Link href="/docs" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Docs
-              </a>
-              <a href="/contract" className="text-gray-400 hover:text-white text-sm transition-colors">
+              </Link>
+              <Link href="/contract" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Contract
-              </a>
-              <a href="/twitter" className="text-gray-400 hover:text-white text-sm transition-colors">
+              </Link>
+              <Link href="/twitter" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Twitter
-              </a>
-              <a href="/telegram" className="text-gray-400 hover:text-white text-sm transition-colors">
+              </Link>
+              <Link href="/telegram" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Telegram
-              </a>
+              </Link>
             </div>
           </div>
           
           <div className="mt-6 pt-6 border-t border-gray-800 text-center">
-            <p className="text-gray-400 text-sm">© 2025 BNBets. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">© 2025 PolyMarket. All rights reserved.</p>
           </div>
         </div>
       </footer>

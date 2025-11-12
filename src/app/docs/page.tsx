@@ -9,13 +9,13 @@ export default function DocsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity" href="/">
-              <Image src="/Logo-CwQcjEIc.svg" alt="BNBets Logo" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10" />
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket Logo" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10" />
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold tracking-tight text-foreground">BNBets</h1>
+                <h1 className="text-lg font-bold tracking-tight text-foreground">PolyMarket</h1>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Prediction Markets</p>
               </div>
               <div className="block sm:hidden">
-                <h1 className="text-lg font-bold tracking-tight text-foreground">BNBets</h1>
+                <h1 className="text-lg font-bold tracking-tight text-foreground">PolyMarket</h1>
               </div>
             </Link>
             <nav className="flex items-center gap-2 sm:gap-6">
@@ -37,7 +37,7 @@ export default function DocsPage() {
           {/* Page Header */}
           <div className="mb-12 text-center">
             <h1 className="text-4xl font-bold text-foreground mb-4">Documentation</h1>
-            <p className="text-xl text-muted-foreground">Everything you need to know about BNBets prediction markets</p>
+            <p className="text-xl text-muted-foreground">Everything you need to know about PolyMarket prediction markets</p>
           </div>
 
           {/* Quick Start */}
@@ -101,7 +101,7 @@ export default function DocsPage() {
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-xl font-semibold text-card-foreground mb-3">Decentralized & Non-Custodial</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  BNBets operates entirely on BNB Chain with smart contracts. Your funds remain in your wallet until you choose to participate in markets.
+                  PolyMarket operates entirely on BNB Chain with smart contracts. Your funds remain in your wallet until you choose to participate in markets.
                 </p>
               </div>
               
@@ -140,9 +140,9 @@ export default function DocsPage() {
               </div>
               
               <div className="bg-card border border-border rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-card-foreground mb-2">What fees does BNBets charge?</h3>
+                <h3 className="text-lg font-semibold text-card-foreground mb-2">What fees does PolyMarket charge?</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  BNBets charges a small platform fee on winning trades. The exact fee structure is transparent and displayed before each trade.
+                  PolyMarket charges a small platform fee on winning trades. The exact fee structure is transparent and displayed before each trade.
                 </p>
               </div>
             </div>

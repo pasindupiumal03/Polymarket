@@ -9,13 +9,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity" href="/">
-              <Image src="/Logo-CwQcjEIc.svg" alt="BNBets Logo" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10" />
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket Logo" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10" />
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold tracking-tight text-foreground">BNBets</h1>
+                <h1 className="text-lg font-bold tracking-tight text-foreground">PolyMarket</h1>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Prediction Markets</p>
               </div>
               <div className="block sm:hidden">
-                <h1 className="text-lg font-bold tracking-tight text-foreground">BNBets</h1>
+                <h1 className="text-lg font-bold tracking-tight text-foreground">PolyMarket</h1>
               </div>
             </Link>
             <nav className="flex items-center gap-2 sm:gap-6">
@@ -213,9 +213,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-3">
-              <Image src="/Logo-CwQcjEIc.svg" alt="BNBets Logo" width={32} height={32} className="w-8 h-8" />
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket Logo" width={32} height={32} className="w-8 h-8" />
               <div>
-                <h2 className="text-sm font-bold text-foreground">BNBETS</h2>
+                <h2 className="text-sm font-bold text-foreground">PolyMarket</h2>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Prediction Markets</p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function Home() {
               <Link href="/twitter" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Twitter</Link>
               <Link href="/telegram" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Telegram</Link>
             </div>
-            <p className="text-sm text-muted-foreground">© 2025 BNBets. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2025 PolyMarket. All rights reserved.</p>
           </div>
         </div>
       </footer>

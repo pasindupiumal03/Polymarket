@@ -55,9 +55,9 @@ export default function MarketsNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link className="flex items-center gap-3 hover:opacity-80 transition-opacity" href="/">
-              <Image src="/Logo-CwQcjEIc.svg" alt="BNBets Logo" width={32} height={32} className="w-8 h-8" />
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket Logo" width={32} height={32} className="w-8 h-8" />
               <div>
-                <h1 className="text-lg font-bold text-white">BNBets</h1>
+                <h1 className="text-lg font-bold text-white">PolyMarket</h1>
                 <p className="text-xs text-gray-400 uppercase tracking-wider">PREDICTION MARKETS</p>
               </div>
             </Link>

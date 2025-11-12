@@ -242,9 +242,9 @@ export default function CuratedMarketsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Image src="/Logo-CwQcjEIc.svg" alt="BNBets" width={24} height={24} className="w-6 h-6" />
+              <Image src="/Logo-CwQcjEIc.svg" alt="PolyMarket" width={24} height={24} className="w-6 h-6" />
               <div>
-                <h3 className="text-white font-medium">BNBETS</h3>
+                <h3 className="text-white font-medium">PolyMarket</h3>
                 <p className="text-xs text-gray-400">PREDICTION MARKETS</p>
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function CuratedMarketsPage() {
           </div>
           
           <div className="mt-6 pt-6 border-t border-gray-800 text-center">
-            <p className="text-gray-400 text-sm">© 2025 BNBets. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">© 2025 PolyMarket. All rights reserved.</p>
           </div>
         </div>
       </footer>

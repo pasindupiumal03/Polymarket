@@ -52,7 +52,7 @@ export default function DocsPage() {
                   <h3 className="text-lg font-semibold text-card-foreground">Connect Wallet</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Connect your BNB Chain compatible wallet to start trading on prediction markets.
+                  Connect your SOL Chain compatible wallet to start trading on prediction markets.
                 </p>
               </div>
               
@@ -76,7 +76,7 @@ export default function DocsPage() {
                   <h3 className="text-lg font-semibold text-card-foreground">Place Bets</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Predict outcomes and place bets using BNB tokens with transparent odds.
+                  Predict outcomes and place bets using SOL tokens with transparent odds.
                 </p>
               </div>
               
@@ -101,7 +101,7 @@ export default function DocsPage() {
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-xl font-semibold text-card-foreground mb-3">Decentralized & Non-Custodial</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  PolyMarket operates entirely on BNB Chain with smart contracts. Your funds remain in your wallet until you choose to participate in markets.
+                  PolyMarket operates entirely on SOL Chain with smart contracts. Your funds remain in your wallet until you choose to participate in markets.
                 </p>
               </div>
               

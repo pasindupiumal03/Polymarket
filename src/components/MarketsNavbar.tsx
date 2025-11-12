@@ -413,7 +413,7 @@ export default function MarketsNavbar() {
   };
 
   const getTabClassName = (href: string) => {
-    const isActive = pathname === href || (href === '/markets/curated' && pathname === '/markets');
+    const isActive = pathname === href || (href === '/markets' && pathname === '/markets');
     return `flex items-center gap-2 py-4 px-6 text-sm font-medium transition-all duration-200 border-b-2 ${
       isActive 
         ? 'border-yellow-500' 
@@ -687,10 +687,10 @@ export default function MarketsNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-0">
             <Link 
-              href="/markets/curated" 
-              className={getTabClassName('/markets/curated')}
+              href="/markets" 
+              className={getTabClassName('/markets')}
               style={{
-                color: pathname === '/markets/curated' || pathname === '/markets' 
+                color: pathname === '/markets' || pathname === '/markets' 
                   ? '#EAB308' 
                   : '#6E6E6E'
               }}

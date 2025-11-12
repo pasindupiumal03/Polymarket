@@ -82,10 +82,10 @@ export default function MarketsNavbar() {
                     <span className="text-white text-sm font-medium">{points}</span>
                   </div>
                   
-                  {/* SOL Balance */}
+                  {/* BNB Balance */}
                   <div className="flex items-center gap-2 px-3 py-2 bg-gray-900 rounded-md">
                     <LuWallet className="text-yellow-500 text-lg" />
-                    <span className="text-white text-sm font-medium">{balance} SOL</span>
+                    <span className="text-white text-sm font-medium">{balance} BNB</span>
                   </div>
                   
                   {/* Wallet Address */}

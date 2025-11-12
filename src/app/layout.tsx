@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PolyMarket - Prediction Markets",
-  description: "SOL prediction markets platform for crypto betting and trading",
+  description: "BNB prediction markets platform for crypto betting and trading",
   icons: {
     icon: [
       {

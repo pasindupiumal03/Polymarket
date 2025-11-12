@@ -53,7 +53,7 @@ export default function DocsPage() {
             </div>
             <h1 className="text-5xl font-bold text-white mb-4">How does PolyMarket work?</h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              The world's first and only community-owned prediction market platform on SOL Chain.
+              The world's first and only community-owned prediction market platform on BNB Chain.
             </p>
           </div>
 
@@ -68,7 +68,7 @@ export default function DocsPage() {
             
             <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-8 mb-8">
               <p className="text-gray-300 leading-relaxed text-lg mb-8">
-                PolyMarket is a decentralized prediction market platform built on SOL Chain, enabling users to 
+                PolyMarket is a decentralized prediction market platform built on BNB Chain, enabling users to 
                 create markets, place bets, and earn from their insights. As a community-owned platform, 
                 PolyMarket puts power back in the hands of its users.
               </p>
@@ -110,7 +110,7 @@ export default function DocsPage() {
                       <SiHiveBlockchain className="text-yellow-400" />
                     </div>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">SOL Chain</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">BNB Chain</h3>
                   <p className="text-sm text-gray-400">
                     Fast, cheap, and secure 
                     transactions
@@ -237,7 +237,7 @@ export default function DocsPage() {
                 <div className="space-y-4 text-gray-300">
                   <div className="flex items-start gap-3">
                     <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2 shrink-0"></div>
-                    <p className="text-sm">Connect your SOL Chain wallet</p>
+                    <p className="text-sm">Connect your BNB Chain wallet</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2 shrink-0"></div>
